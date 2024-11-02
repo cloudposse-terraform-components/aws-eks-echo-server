@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "echo-server.fullname" . }}
+  labels:
+    {{- include "echo-server.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "echo-server.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      name: {{ include "echo-server.fullname" . }}
+      labels:
+        {{- include "echo-server.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args:
+          # Disable the feature that turns the echo server into a file browser on the server (security risk)
+          - "--enable:file=false"
+          {{- if eq (printf "%v" .Values.livenessProbeLogging) "false" }}
+          - "--logs:ignore:ping=true"
+          {{- end }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              port: http
+              path: /ping
+              httpHeaders:
+                - name: x-echo-code
+                  value: "200"
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
+            successThreshold: 1
+          {{- with index .Values "resources" }}
+          resources:
+            {{- with index . "limits" }}
+            limits:
+              cpu: {{ index . "cpu" | default "50m" }}
+              memory: {{ index . "memory" | default "128Mi" }}
+            {{- end }}
+            {{- with index . "requests" }}
+            requests:
+              cpu: {{ index . "cpu" | default "50m" }}
+              memory: {{ index . "memory" | default "128Mi" }}
+            {{- end }}
+          {{- end }}
