@@ -1,0 +1,59 @@
+# Default values for echo-server.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  # image.repository -- https://hub.docker.com/r/ealen/echo-server
+  repository: ealen/echo-server
+  # image.tag -- https://github.com/Ealenn/Echo-Server/releases
+  tag: 0.8.12
+  pullPolicy: IfNotPresent
+
+#imagePullSecrets: []
+nameOverride: ""
+#fullnameOverride: ""
+
+
+service:
+  type: ClusterIP
+  port: 80
+
+tlsEnabled: true
+# If livenessProbeLogging is false, requests to /ping will not be logged
+livenessProbeLogging: false
+
+ingress:
+  ## Allow class to be specified, but use default class (not class named "default") by default
+  # class: default
+
+  # Use deprecated `kubernetes.io/ingress.class` annotation
+  use_ingress_class_annotation: false
+  nginx:
+    # ingress.nginx.enabled -- Enable NGiNX ingress
+    enabled: false
+    tls_certificate_cluster_issuer: "letsencrypt-prod"
+  alb:
+    enabled: false
+    ## Allow group to be specified, but use default by default
+    # group_name: common
+
+    # Do NOT allow SSL redirect to be specified, because that affects other ingresses.
+    # "Once defined on a single Ingress, it impacts every Ingress within IngressGroup."
+    # See https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.6/guide/ingress/annotations/#ssl-redirect
+
+resources:
+  limits:
+    cpu: 50m
+    memory: 128Mi
+#  requests:
+#    cpu: 50m
+#    memory: 128Mi
+
+autoscaling:
+  enabled: false
+  #minReplicas: 1
+  #maxReplicas: 100
+  #targetCPUUtilizationPercentage: 80
+  #targetMemoryUtilizationPercentage: 80
