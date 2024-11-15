@@ -2,6 +2,6 @@
 _extends: .github
 repository:
   name: aws-eks-echo-server
-  description: This is copied from [cloudposse/terraform-aws-components](https://github
+  description: This is copied from cloudposse/terraform-aws-components
   homepage: https://cloudposse.com/accelerate
   topics: terraform, terraform-component
