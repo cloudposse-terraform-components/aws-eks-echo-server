@@ -85,6 +85,5 @@ func TestRunSuite(t *testing.T) {
 		},
 	}
 	suite.AddDependency(t, "dns-delegated", "default-test", &inputs)
-	suite.AddDependency(t, "eks/external-dns", "default-test", nil)
 	helper.Run(t, suite)
 }
