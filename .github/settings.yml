@@ -5,3 +5,4 @@ repository:
   description: "This component installs the Ealenn/Echo-Server to EKS clusters"
   homepage: https://cloudposse.com/accelerate
   topics: terraform, terraform-component
+
