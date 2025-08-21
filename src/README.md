@@ -58,6 +58,8 @@ Terraform and the Kubernetes provider. During the "plan" phase Terraform gets a 
 token and caches it, and then tries to use it during "apply". If the token has expired by the time you try to run
 "apply", the "apply" will fail. The workaround is to run `terraform apply -auto-approve` without a "plan" file.
 
+<!-- prettier-ignore-start -->
+<!-- prettier-ignore-end -->
 ## Usage
 
 **Stack Level**: Regional
@@ -110,8 +112,8 @@ components:
 In rare cases where some ingress controllers do not support the `ingressClassName` field, you can restore the old
 `kubernetes.io/ingress.class` annotation by setting `ingress.use_ingress_class_annotation: true` in `chart_values`.
 
-<!-- prettier-ignore-start -->
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+
+<!-- markdownlint-disable -->
 ## Requirements
 
 | Name | Version |
@@ -198,11 +200,17 @@ In rare cases where some ingress controllers do not support the `ingressClassNam
 |------|-------------|
 | <a name="output_hostname"></a> [hostname](#output\_hostname) | Hostname of the deployed echo server |
 | <a name="output_metadata"></a> [metadata](#output\_metadata) | Block status of the deployed release |
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
-<!-- prettier-ignore-end -->
+<!-- markdownlint-restore -->
+
+
 
 ## References
 
-- https://github.com/Ealenn/Echo-Server
+
+- [Ealenn/Echo-Server](https://github.com/Ealenn/Echo-Server) - 
+
+
+
 
 [<img src="https://cloudposse.com/logo-300x69.svg" height="32" align="right"/>](https://cpco.io/homepage?utm_source=github&utm_medium=readme&utm_campaign=cloudposse-terraform-components/aws-eks-echo-server&utm_content=)
+
