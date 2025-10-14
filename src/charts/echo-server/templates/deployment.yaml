@@ -16,6 +16,9 @@ spec:
       name: {{ include "echo-server.fullname" . }}
       labels:
         {{- include "echo-server.selectorLabels" . | nindent 8 }}
+        {{- with .Values.labels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
     spec:
       containers:
         - name: {{ .Chart.Name }}
