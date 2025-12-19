@@ -69,4 +69,11 @@ variable "hostname_template" {
     The `format()` string to use to generate the hostname via `format(var.hostname_template, var.tenant, var.stage, var.environment)`"
     Typically something like `"echo.%[3]v.%[2]v.example.com"`.
     EOT
+  default     = ""
+}
+
+variable "hostname" {
+  type        = string
+  description = "Hostname override. When set, this takes precedence over hostname_template."
+  default     = ""
 }

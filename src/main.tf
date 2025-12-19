@@ -2,7 +2,9 @@ locals {
   ingress_nginx_enabled = var.ingress_type == "nginx" ? true : false
   ingress_alb_enabled   = var.ingress_type == "alb" ? true : false
 
-  hostname = module.this.enabled ? format(var.hostname_template, var.tenant, var.stage, var.environment) : null
+  hostname = module.this.enabled ? (
+    var.hostname != "" ? var.hostname : format(var.hostname_template, var.tenant, var.stage, var.environment)
+  ) : null
 }
 
 module "echo_server" {
